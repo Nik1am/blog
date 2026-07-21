@@ -1,0 +1,39 @@
+#markdown-viewer img {
+    max-width: 320px;
+}
+
+html,
+body,
+main {
+    margin: 0;
+    padding: 0;
+}
+
+#markdown-viewer {
+    padding-left: 2em;
+    border-left: 2px solid;
+    overflow-y: auto;
+}
+
+#sidebar {
+    padding-left: 1em;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-width: fit-content;
+}
+
+#sidebar-list {
+    overflow-y: auto;
+    padding: 0;
+    list-style-type: none;
+    flex: 1;
+    min-height: 0;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1em;
+    height: 100vh;
+}

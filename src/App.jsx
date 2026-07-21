@@ -6,28 +6,34 @@ function App() {
   const [content, setContent] = useState("");
   return (
     <>
-      <div>
+      <main>
         <div id="sidebar">
-          <ul>
-            {posts.map((e) => (
-              <li>
-                <button
-                  onClick={() => {
-                    fetch(`/posts/${e.file}.md`)
+          <div>
+            <h1>CheemsDFI's blog</h1>
+            <hr></hr>
+          </div>
+          <ul id="sidebar-list">
+            {posts.map((post) => (
+              <li class="sidebar-post">
+                <a
+                  href=""
+                  onClick={(e) => {
+                    e.preventDefault()
+                    fetch(`/posts/${post.file}.md`)
                       .then((res) => res.text())
                       .then((text) => setContent(text));
                   }}
                 >
-                  {e.name}
-                </button>
+                  {post.name}
+                </a>
               </li>
             ))}
           </ul>
         </div>
-        <main>
+        <article id="markdown-viewer">
           <ReactMarkdown>{content}</ReactMarkdown>
-        </main>
-      </div>
+        </article>
+      </main>
     </>
   );
 }
