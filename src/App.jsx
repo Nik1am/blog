@@ -2,23 +2,49 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import "./App.css";
 import posts from "./postIndex.json";
+
+function CustomImage(props) {
+  props = props.props; // what?
+  return (
+    <img
+      style={{
+        "transition-duration": "0.1s",
+      }}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / e.currentTarget.width;
+        const y = (e.clientY - rect.top) / e.currentTarget.height;
+        const rot = 30;
+        e.currentTarget.style.transform = `perspective(800px) rotateX(${rot * (y * -2 + 1)}deg) rotateY(${rot * (x * 2 - 1)}deg)`;
+      }}
+      onMouseLeave={(e) => {
+        e.target.style.transform = `perspective(800px) rotateX(0deg) rotateY(0deg)`;
+      }}
+      src={props.src}
+      alt={props.alt}
+      title={props.title}
+    ></img>
+  );
+}
+
 function App() {
   const [content, setContent] = useState("");
   return (
     <>
       <main>
         <div id="sidebar">
-          <div>
+          <header>
             <h1>CheemsDFI's blog</h1>
             <hr></hr>
-          </div>
+          </header>
           <ul id="sidebar-list">
             {posts.map((post) => (
               <li class="sidebar-post">
+                &gt;
                 <a
-                  href=""
+                  href={`/posts/${post.file}.md`}
                   onClick={(e) => {
-                    e.preventDefault()
+                    e.preventDefault();
                     fetch(`/posts/${post.file}.md`)
                       .then((res) => res.text())
                       .then((text) => setContent(text));
@@ -29,9 +55,28 @@ function App() {
               </li>
             ))}
           </ul>
+          <footer>
+            <hr></hr>
+            <h3>Contact me</h3>
+            Discord:@16x9
+          </footer>
         </div>
         <article id="markdown-viewer">
-          <ReactMarkdown>{content}</ReactMarkdown>
+          <ReactMarkdown
+            components={{
+              img(props) {
+                return (
+                  <img
+                    src={props.src}
+                    alt={props.alt}
+                    title={props.title}
+                  ></img>
+                );
+              },
+            }}
+          >
+            {content}
+          </ReactMarkdown>
         </article>
       </main>
     </>

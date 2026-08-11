@@ -17,6 +17,7 @@ main {
 
 #sidebar {
     padding-left: 1em;
+    padding-right: 2em;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -34,6 +35,5 @@ main {
 main {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    gap: 1em;
     height: 100vh;
 }
